@@ -10,6 +10,7 @@ class PostRepositoryTest extends TestCase
     private $post;
     private $repository;
     private $storage;
+    private $insertedPostId;
 
     /* Tests */
 
@@ -24,7 +25,7 @@ class PostRepositoryTest extends TestCase
     {
         $this->startWithANewPostRepositoryAndStoredPost();
 
-        $this->postExists();
+        $this->postWithTestIdExists();
 
         $this->postDataWasLoadedCorrectly();
     }
@@ -33,7 +34,16 @@ class PostRepositoryTest extends TestCase
     {
         $this->startWithANewPostRepositoryWithNoStoredPosts();
 
-        $this->postDoesntExist();
+        $this->postWithTestIdDoesntExist();
+    }
+
+    public function testInsertNewPost()
+    {
+        $this->startWithANewPostRepositoryWithNoStoredPosts();
+
+        $this->insertNewPost();
+
+        $this->insertedPostExists();
     }
 
     /* Setup */
@@ -76,7 +86,7 @@ class PostRepositoryTest extends TestCase
 
         $this->storage->insert('posts', $this->getTestPostData());
     }
-    
+
     /* Assertions */
 
     private function postExistsWithId($id)
@@ -86,8 +96,14 @@ class PostRepositoryTest extends TestCase
         $this->assertInstanceOf(Post::class, $this->post);
     }
 
-    private function postExists() {
+    private function postWithTestIdExists()
+    {
         $this->postExistsWithId($this->getTestId());
+    }
+
+    private function insertedPostExists()
+    {
+        $this->postExistsWithId($this->getLastInsertedPostId());
     }
 
     private function postDoesntExistWithId($id)
@@ -97,7 +113,8 @@ class PostRepositoryTest extends TestCase
         $this->assertNull($this->post);
     }
 
-    private function postDoesntExist() {
+    private function postWithTestIdDoesntExist()
+    {
         $this->postDoesntExistWithId($this->getTestId());
     }
 
@@ -107,26 +124,52 @@ class PostRepositoryTest extends TestCase
 
         $this->assertEquals($this->getTestPostData(), $this->repository->createPostParams[0] ?? null);
     }
-    
-    /* Test Data */
 
-    private function getTestId() {
-        return 1;
+    private function insertNewPost()
+    {
+        $this->post = $this->getMockPostWithNoId();
+
+        $this->insertedPostId = $this->repository->insert($this->post);
+
+        $this->assertInternalType('int', $this->insertedPostId);
     }
 
-    private function getTestTitle() {
+    /* Test Data */
+
+    private function getTestId()
+    {
+        return 5;
+    }
+
+    private function getTestTitle()
+    {
         return 'Title';
     }
 
-    private function getTestContent() {
+    private function getTestContent()
+    {
         return 'Content';
     }
-    
-    private function getTestPostData() {
+
+    private function getTestPostData()
+    {
         return [
             'id' => $this->getTestId(),
             'title' => $this->getTestTitle(),
             'content' => $this->getTestContent(),
         ];
+    }
+
+    private function getMockPostWithNoId()
+    {
+        $post = $this->createMock(Post::class);
+        $post->method('getId')->willReturn(null);
+        $post->method('getTitle')->willReturn($this->getTestTitle());
+        $post->method('getContent')->willReturn($this->getTestContent());
+        return $post;
+    }
+
+    private function getLastInsertedPostId() {
+        return $this->insertedPostId;
     }
 }

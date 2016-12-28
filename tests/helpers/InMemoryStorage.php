@@ -10,9 +10,19 @@ class InMemoryStorage implements StorageInterface
 
     public function insert(string $table, array $row) : int
     {
-        $id = $this->id[$table] ?? 0;
-        $this->id[$table] = ++$id;
+        $last_insert_id = ($this->id[$table] ?? 0);
+
+        if (isset($row['id'])) {
+            $id = $row['id'];
+        } else {
+            $id = $last_insert_id + 1;
+        }
+
+        if (array_key_exists($id, $this->tables)) { throw new \Exception('Insert failed: id already exists'); };
+
+        $this->id[$table] = $id;
         $row['id'] = $id;
+
         $this->tables[$table][$id] = $row;
         return $id;
     }

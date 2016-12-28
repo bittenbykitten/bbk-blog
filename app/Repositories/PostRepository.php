@@ -17,6 +17,19 @@ class PostRepository extends AbstractRepository
         );
     }
 
+    protected function createRowFromModel(AbstractModel $model) : array
+    {
+        if (!($model instanceof Post)) {
+            throw new \Exception('Invalid model type');
+        }
+
+        return [
+            'id' => $model->getId(),
+            'title' => $model->getTitle(),
+            'content' => $model->getContent(),
+        ];
+    }
+
     protected function createPost($id, $title, $content)
     {
         $post = new Post($title, $content);
