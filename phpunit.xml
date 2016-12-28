@@ -1,0 +1,7 @@
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="BBK Blog Unit Tests">
+            <directory>tests/unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

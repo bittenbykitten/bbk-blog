@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {
+            "BBKBlog\\": "app/",
+            "BBKBlog\\Tests\\Helpers\\": "tests/helpers/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.7.*"
+    }
+}
