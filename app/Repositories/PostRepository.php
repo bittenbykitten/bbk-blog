@@ -13,7 +13,8 @@ class PostRepository extends AbstractRepository
         return $this->createPost(
             $row['id'] ?? null,
             $row['title'] ?? '',
-            $row['content'] ?? ''
+            $row['content'] ?? '',
+            $row['publish_date'] ?? null
         );
     }
 
@@ -27,12 +28,13 @@ class PostRepository extends AbstractRepository
             'id' => $model->getId(),
             'title' => $model->getTitle(),
             'content' => $model->getContent(),
+            'publish_date' => $model->getPublishDate(),
         ];
     }
 
-    protected function createPost($id, $title, $content)
+    protected function createPost($id, $title, $content, $publishDate)
     {
-        $post = new Post($title, $content);
+        $post = new Post($title, $content, $publishDate);
         $post->setId($id);
         return $post;
     }

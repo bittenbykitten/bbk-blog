@@ -47,11 +47,26 @@ class PostTest extends TestCase
         $this->thePostContentIs($this->getDifferentTestContent());
     }
 
+    public function testPublishDateGetterAndSetter()
+    {
+        $this->startWithANewPost();
+
+        $this->thePostPublishDateIs($this->getTestPublishDate());
+
+        $this->post->setPublishDate($this->getDifferentTestPublishDate());
+
+        $this->thePostPublishDateIs($this->getDifferentTestPublishDate());
+    }
+
     /* Setup */
 
     private function startWithANewPost()
     {
-        $this->post = new Post($this->getTestTitle(), $this->getTestContent());
+        $this->post = new Post(
+            $this->getTestTitle(),
+            $this->getTestContent(),
+            $this->getTestPublishDate()
+        );
     }
 
     /* Assertions */
@@ -69,6 +84,11 @@ class PostTest extends TestCase
     private function thePostContentIs($value)
     {
         $this->assertEquals($value, $this->post->getContent());
+    }
+
+    private function thePostPublishDateIs($value)
+    {
+        $this->assertEquals($value, $this->post->getPublishDate());
     }
     
     /* Test Data */
@@ -96,5 +116,15 @@ class PostTest extends TestCase
     private function getDifferentTestContent()
     {
         return 'Different Content';
+    }
+
+    private function getTestPublishDate()
+    {
+        return new \DateTimeImmutable('2016-12-30 16:00:00');
+    }
+
+    private function getDifferentTestPublishDate()
+    {
+        return new \DateTimeImmutable('2017-01-15 12:00:00');
     }
 }

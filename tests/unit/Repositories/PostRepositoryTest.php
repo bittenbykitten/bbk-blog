@@ -69,11 +69,12 @@ class PostRepositoryTest extends TestCase
             /**
              * Override post creation - record method calls and parameters for tests
              */
-            protected function createPost($id, $title, $content) {
+            protected function createPost($id, $title, $content, $publishDate) {
                 $this->createPostParams[] = [
                     'id' => $id,
                     'title' => $title,
                     'content' => $content,
+                    'publish_date' => $publishDate,
                 ];
                 return $this->mockPost;
             }
@@ -151,12 +152,18 @@ class PostRepositoryTest extends TestCase
         return 'Content';
     }
 
+    private function getTestPublishDate()
+    {
+        return new \DateTimeImmutable('2016-12-30 16:00:00');
+    }
+
     private function getTestPostData()
     {
         return [
             'id' => $this->getTestId(),
             'title' => $this->getTestTitle(),
             'content' => $this->getTestContent(),
+            'publish_date' => $this->getTestPublishDate(),
         ];
     }
 
@@ -166,6 +173,7 @@ class PostRepositoryTest extends TestCase
         $post->method('getId')->willReturn(null);
         $post->method('getTitle')->willReturn($this->getTestTitle());
         $post->method('getContent')->willReturn($this->getTestContent());
+        $post->method('getPublishDate')->willReturn($this->getTestPublishDate());
         return $post;
     }
 
