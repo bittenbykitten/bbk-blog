@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "09f7bfab678acc8d40d94c73a4c120bb",
-    "packages": [],
+    "content-hash": "d0049c0af1031a2baaf826c794dd9319",
+    "packages": [
+        {
+            "name": "paragonie/easydb",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/easydb.git",
+                "reference": "dbc1885b864144c453259b0005c4363bf1452ca6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/easydb/zipball/dbc1885b864144c453259b0005c4363bf1452ca6",
+                "reference": "dbc1885b864144c453259b0005c4363bf1452ca6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5",
+                "spatie/7to5": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ParagonIE\\EasyDB\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Arciszewski",
+                    "email": "scott@paragonie.com",
+                    "homepage": "https://paragonie.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "homepage": "https://github.com/shadowhand",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "Easy-to-use database abstraction",
+            "keywords": [
+                "database",
+                "pdo",
+                "security",
+                "sql"
+            ],
+            "time": "2016-11-23T16:38:27+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
